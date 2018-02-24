@@ -7,7 +7,7 @@
 * Authors: Evgeny Muravjev & Alexander Drutsa  
 */
 
-
+error_reporting(E_ALL ^ E_WARNING);
 class EMT_Lib
 {
 	const LAYOUT_STYLE = 1;
@@ -2644,7 +2644,7 @@ class EMT_Base
     		$safeblocks = true === $way ? $this->_safe_blocks : array_reverse($this->_safe_blocks);
        		foreach ($safeblocks as $block) 
        		{
-        		$text = preg_replace_callback("/({$block['open']})(.+?)({$block['close']})/s",   create_function('$m','return $m[1].'.$safeType . '.$m[3];')   , $text);
+        		$text = preg_replace_callback("/({$block['open']})(.+?)({$block['close']})/s",   function($m){return $m[1].$safeType.$m[3];}   , $text);
         	}
     	}
     	

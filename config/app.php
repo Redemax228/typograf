@@ -1,6 +1,8 @@
 <?php
-
+error_reporting(E_ALL ^ E_DEPRECATED);
 return [
+    Tttptd\Mdash\MdashServiceProvider::class,
+    'Mdash' => Tttptd\Mdash\Facades\Mdash::class,
 
     /*
     |--------------------------------------------------------------------------

@@ -14,7 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::post('/home', 'UserController@typograthy');
+
+
+Route::post('/', 'UserController@typography');
+
 
 Auth::routes();
 

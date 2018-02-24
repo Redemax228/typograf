@@ -1,21 +1,21 @@
 <?php
 
-class UsersController extends Controller {
+namespace App\Http\Controllers;
 
-    public function typography()
+use Illuminate\Http\Request;
+
+class UserController extends Controller
+{
+    public function typography(Request $request)
     {
-        $result = User::query();
 
-        if (Input::has('workText'))
+        if ($request['workText']!='')
         {
-            $typograf = new EMTypograph();
-            $typograf->set_text(Input::get('workText'));
+            $result = $request->session()->all();
+            $token = $result['_token'];
+            return view('welcome',['token'=>$token, 'workText'=>$request['workText']]);
         }
 
-        return View::make('welcome.blade.php')
-            ->with('result', $result);
+        
     }
-
-    
-
 }

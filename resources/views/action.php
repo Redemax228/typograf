@@ -6,4 +6,3 @@
     echo $str_out;
 
 }
-?>
