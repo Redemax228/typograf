@@ -1,11 +1,5 @@
 <?php
-
-/**
-* Evgeny Muravjev Typograph, http://mdash.ru
-* Version: 3.5 Gold Master
-* Release Date: July 2, 2015
-* Authors: Evgeny Muravjev & Alexander Drutsa  
-*/
+error_reporting(E_ERROR | E_PARSE);
 
 error_reporting(E_ALL ^ E_WARNING);
 class EMT_Lib
@@ -202,12 +196,12 @@ class EMT_Lib
      * @param 	bool $safe
      * @return  string
      */
-    public static function safe_tag_chars($text, $way)
+   public static function safe_tag_chars($text, $way)
     {
     	if ($way) 
-        	$text = preg_replace_callback('/(\<\/?)([^<>]+?)(\>)/s', create_function('$m','return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == \'-\' && substr(trim($m[2]), 1, 1) != \'-\')? $m[0] : $m[1].( substr(trim($m[2]), 0, 1) === "a" ? "%%___"  : ""  ) . EMT_Lib::encrypt_tag(trim($m[2]))  . $m[3];'), $text);
+        	$text = preg_replace_callback('/(\<\/?)([^<>]+?)(\>)/s', function($m){return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 1) === "a" ? "%%___"  : ""  ) . EMT_Lib::encrypt_tag(trim($m[2]))  . $m[3];}, $text);
         else
-        	$text = preg_replace_callback('/(\<\/?)([^<>]+?)(\>)/s', create_function('$m','return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == \'-\' && substr(trim($m[2]), 1, 1) != \'-\')? $m[0] : $m[1].( substr(trim($m[2]), 0, 3) === "%%___" ? EMT_Lib::decrypt_tag(substr(trim($m[2]), 4)) : EMT_Lib::decrypt_tag(trim($m[2])) ) . $m[3];'), $text);	
+        	$text = preg_replace_callback('/(\<\/?)([^<>]+?)(\>)/s', function($m){return (strlen($m[1])==1 && substr(trim($m[2]), 0, 1) == '-' && substr(trim($m[2]), 1, 1) != '-')? $m[0] : $m[1].( substr(trim($m[2]), 0, 3) === "%%___" ? EMT_Lib::decrypt_tag(substr(trim($m[2]), 4)) : EMT_Lib::decrypt_tag(trim($m[2])) ) . $m[3];}, $text);	
         return $text;
     }
     
@@ -218,9 +212,9 @@ class EMT_Lib
      * @param 	string $text
      * @return  string
      */
-    public static function decode_internal_blocks($text)
+     public static function decode_internal_blocks($text)
     {
-    	$text = preg_replace_callback('/'.EMT_Lib::INTERNAL_BLOCK_OPEN.'([a-zA-Z0-9\/=]+?)'.EMT_Lib::INTERNAL_BLOCK_CLOSE.'/s', create_function('$m','return EMT_Lib::decrypt_tag($m[1]);'), $text);	
+    	$text = preg_replace_callback('/'.EMT_Lib::INTERNAL_BLOCK_OPEN.'([a-zA-Z0-9\/=]+?)'.EMT_Lib::INTERNAL_BLOCK_CLOSE.'/s', function($m){return EMT_Lib::decrypt_tag($m[1]);}, $text);	
         return $text;
     }
     

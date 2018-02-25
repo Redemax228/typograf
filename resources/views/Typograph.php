@@ -1,6 +1,6 @@
 <?php
 
-namespace Emuravjev\Mdash;
+require_once('TypographBase.php');
 
 class Typograph extends TypographBase
 {

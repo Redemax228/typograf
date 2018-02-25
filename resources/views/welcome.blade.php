@@ -34,17 +34,20 @@ if(app('request')-> has('workText'))
 <img src="img/1.jpg" width="80" >
 <form method="post" action='/'>
     {{ csrf_field() }}
-    <br><textarea id="workText" name="workText" rows="18" cols="100">{{$result or ''}}</textarea>
+    <br><textarea id="workText" name="workText"  rows="15" cols="77" onclick="value='' ">{{$workText or ''}}</textarea>
+
     <br><br><input type="submit" value="Типографувати"/>
-    <input type="reset" value ="Очистити">
-    <input type="submit" value ="Виділити все"/>
-    <input type="submit" value ="Прибрати теги"/>
+
+    <input type="reset" value ="Очистити" onclick=""/>
+    <input type="submit" value ="Виділити все" />
 </form>
 
-<audio  controls src="audio/mus.mp3"></audio>
-<audio controls src="audio/2.mp3"></audio>
-
-
+<form method="post" action='/'>
+    {{ csrf_field() }}
+    <textarea id="workText" name="textResult" rows="15" cols="77">{{$result or ''}}</textarea>
+    <br>
+    <input type="button" id="bu3" value="Виділити все" onclick="dT.focus(); dT.select();" class="button" style="width: 10%" title="выделить текст (Ctrl+A)">
+</form>
 
 </body>
 </html>
